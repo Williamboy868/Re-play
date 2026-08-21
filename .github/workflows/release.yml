@@ -63,18 +63,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.event.inputs.version || github.ref_name }}
-          releaseName: 'Re-play Downloader ${{ github.event.inputs.version || github.ref_name }}'
+          tagName: ${{ inputs.version || github.ref_name }}
+          releaseName: 'Re-play Downloader ${{ inputs.version || github.ref_name }}'
           releaseBody: 'See the assets below to download and install this version.'
           releaseDraft: false
           prerelease: false
           tauriScript: bun run tauri
 
       - name: Upload Extension Zip to Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: matrix.platform == 'ubuntu-22.04' # Only upload it once
         with:
-          tag_name: ${{ github.event.inputs.version || github.ref_name }}
+          tag_name: ${{ inputs.version || github.ref_name }}
           files: builds/re-play-extension.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
