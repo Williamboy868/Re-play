@@ -1,0 +1,61 @@
+name: 'Build Re-play'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest, ubuntu-22.04, macos-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies (Ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf zip
+
+      - name: Install Frontend Dependencies
+        run: bun install
+
+      - name: Build Extension Zip (Windows)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          mkdir -Force builds
+          Compress-Archive -Path "extension\*" -DestinationPath "builds\re-play-extension.zip" -Force
+
+      - name: Build Extension Zip (macOS / Linux)
+        if: matrix.platform != 'windows-latest'
+        run: |
+          mkdir -p builds
+          cd extension
+          zip -r ../builds/re-play-extension.zip *
+          cd ..
+
+      - name: Build Tauri App
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tauriScript: bun run tauri

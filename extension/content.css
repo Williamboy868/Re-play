@@ -1,0 +1,179 @@
+/* ============================================================
+   Re-play Floating Action Button
+   Fixed to bottom-right — fully layout-agnostic.
+   ============================================================ */
+#replay-download-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647; /* Always on top, even above YouTube modals */
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  color: #e0e0e0;
+  border: 1px solid rgba(79, 172, 254, 0.35);
+  border-radius: 50px;
+  padding: 11px 18px;
+
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 0 0 rgba(79, 172, 254, 0.4);
+
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    padding 0.2s ease;
+
+  animation: replay-fab-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+#replay-download-btn img {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+#replay-download-btn span {
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#replay-download-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, #1e2a50 0%, #1a2e60 60%, #1247a0 100%);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.6),
+    0 0 0 4px rgba(79, 172, 254, 0.2);
+  color: #ffffff;
+}
+
+#replay-download-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Slide-up entrance animation */
+@keyframes replay-fab-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Styles */
+#replay-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 2147483647; /* Max z-index for YouTube */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#replay-modal {
+  background: #1e1e24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 350px;
+  padding: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.replay-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.replay-modal-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #f5f5f5;
+  font-weight: 600;
+}
+
+#replay-modal-close {
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+#replay-modal-close:hover {
+  color: white;
+}
+
+.replay-format-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.replay-format-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #888;
+}
+
+.replay-progress-text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-align: center;
+  margin: 20px 0 5px 0;
+}
+
+.replay-progress-status {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+.replay-progress-bg {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.replay-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #666 0%, #aaa 100%);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}

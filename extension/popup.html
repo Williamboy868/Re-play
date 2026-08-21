@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 250px;
+      padding: 15px;
+      text-align: center;
+      background: #1e1e24;
+      color: white;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #4facfe;
+    }
+    button, .format-btn {
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+    button:hover, .format-btn:hover {
+      box-shadow: 0 4px 10px rgba(79, 172, 254, 0.4);
+      transform: translateY(-1px);
+    }
+    .format-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .format-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #888;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #a0a0a0;
+      margin-bottom: 15px;
+    }
+    /* Progress bar styles */
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .progress-bar.ffmpeg {
+      background: linear-gradient(90deg, #f59e0b 25%, #fbbf24 50%, #f59e0b 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+      width: 100%;
+    }
+    .progress-bar.completed {
+      background: linear-gradient(90deg, #10b981, #43e97b);
+      width: 100%;
+    }
+    .progress-bar.error {
+      background: #ef4444;
+      width: 100%;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body>
+  <h2>Re-play Universal</h2>
+  <div id="loading" style="display: none;">
+    <p>Loading available formats...</p>
+  </div>
+  <div id="selection">
+    <p class="subtitle">Download media from the current page.</p>
+    <div id="format-buttons">
+      <!-- Buttons injected here -->
+      <button class="format-btn" data-format="best">Best Quality (Video + Audio)</button>
+      <button class="format-btn" data-format="audio_only">Audio Only (MP3)</button>
+    </div>
+  </div>
+  <div id="progress" style="display: none;">
+    <p>Downloading...</p>
+    <h3 id="progress-text">0%</h3>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <p id="progress-status" style="font-size: 0.8rem; color: #a0a0a0;"></p>
+    <div id="pause-resume-container" style="display: flex; gap: 8px; margin-top: 15px;">
+      <button id="btn-pause" class="format-btn" style="flex: 1; padding: 6px;">Pause</button>
+      <button id="btn-resume" class="format-btn" style="flex: 1; padding: 6px; display: none;">Resume</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
+
