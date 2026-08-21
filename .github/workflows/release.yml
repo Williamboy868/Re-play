@@ -76,5 +76,4 @@ jobs:
         with:
           tag_name: ${{ inputs.version || github.ref_name }}
           files: builds/re-play-extension.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
