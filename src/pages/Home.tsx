@@ -55,7 +55,7 @@ export function Home() {
     const finishedUrls = Object.entries(activeDownloads)
       .filter(([_, progress]) => progress.includes("Completed") || progress.includes("Done") || progress.includes("Error"))
       .map(([url, _]) => url);
-      
+
     for (const dUrl of finishedUrls) {
       try {
         await fetch("http://127.0.0.1:14222/clear_progress", {
@@ -67,7 +67,7 @@ export function Home() {
         console.error("Failed to clear progress for", dUrl, e);
       }
     }
-    
+
     // Refresh list
     fetch("http://127.0.0.1:14222/all_progress")
       .then(res => res.json())
@@ -100,7 +100,7 @@ export function Home() {
           <div>
             <h3 style={{ margin: "0 0 8px 0", color: "#ffffff", fontSize: "1.1rem" }}>Ready for Downloads</h3>
             <p style={{ margin: 0, color: "#9ca3af", fontSize: "0.95rem" }}>
-              Open a video on YouTube, Twitter, or any of the 1000+ supported sites and click the extension.
+              Open a video on YouTube, Twitter, or any of the 1200+ supported sites and click the extension.
             </p>
           </div>
           <div style={{ color: "#10b981", display: "flex", alignItems: "center", gap: 8, fontWeight: 500, fontSize: "0.95rem" }}>
@@ -119,7 +119,7 @@ export function Home() {
             </button>
           )}
         </div>
-        
+
         {Object.keys(activeDownloads).length === 0 && (
           <p className="empty-state">No active downloads.</p>
         )}
@@ -131,7 +131,7 @@ export function Home() {
             const parts = progress.split(" · ");
             const percentPart = parts[0] || progress;
             const detailsPart = parts.slice(1).join("  ·  ");
-            
+
             // Extract numeric width for progress bar
             let barWidth = "0%";
             if (percentPart.includes("%")) {
@@ -143,10 +143,10 @@ export function Home() {
             } else if (isCompleted) {
               barWidth = "100%";
             }
-            
+
             // Determine bar style class
             const isIndeterminate = isFFmpeg || progress === "NA";
-            
+
             return (
               <div key={dlUrl} className="download-card fade-in">
                 <div className="download-info">
@@ -168,7 +168,7 @@ export function Home() {
                   </div>
                 </div>
                 <div className="progress-bar-bg">
-                  <div 
+                  <div
                     className={`progress-bar-fill ${isIndeterminate ? "indeterminate" : ""} ${isError ? "error-bar" : ""} ${isFFmpeg ? "ffmpeg-bar" : ""}`}
                     style={{ width: barWidth }}
                   ></div>

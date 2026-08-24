@@ -36,3 +36,5 @@ zip = "0.6"
 futures-util = "0.3"
 tokio-util = { version = "0.7", features = ["compat"] }
 walkdir = "2"
+tauri-plugin-updater = "2.10.1"
+tauri-plugin-process = "2.3.1"

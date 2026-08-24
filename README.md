@@ -1,7 +1,7 @@
 <div align="center">
   <img src="public/replay.png" alt="Re-play Logo" width="150" />
   <h1>Re-play Downloader</h1>
-  <p><b>Download video and audio from 1000+ sites directly to your desktop.</b></p>
+  <p><b>Download video and audio from 1200+ sites directly to your desktop.</b></p>
 </div>
 <br />
 

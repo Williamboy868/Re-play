@@ -2,6 +2,26 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.2] - 2026-08-24
+
+### Added
+- **Automatic App Updates**: Integrated the Tauri updater plugin to silently check GitHub Releases for new versions on startup.
+- **Manual Update Check**: Added a "Check for Updates" button to the Settings page.
+- **Update Notifications**: The app now displays a prompt with release notes when an update is found, allowing one-click installation and restart.
+- **Extension Update Reminders**: Added a helpful post-update prompt to remind users to re-export and load the browser extension if they just installed a new desktop version.
+
+## [1.1.1] - 2026-08-24
+
+### Added
+- **Public Website**: Migrated the landing page to a multi-page React SPA with routing.
+- **Supported Sites Directory**: Added a new searchable page listing all 1,200+ websites supported by `yt-dlp`.
+
+### Changed
+- **Onboarding UX**: Streamlined the extension installation instructions in the desktop app, merging Chromium browsers (Chrome, Edge, Brave, Vivaldi) into a single, clearer flow.
+
+### Fixed
+- **Release CI/CD**: Fixed race condition in the GitHub Actions release workflow that caused the extension zip upload to fail (migrated to GitHub CLI).
+
 ## [1.1.0] - 2026-08-21
 
 ### Fixed

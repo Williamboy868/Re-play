@@ -3,6 +3,7 @@ import { DownloadCloud, History, Settings } from "lucide-react";
 import { Home } from "./pages/Home";
 import { History as HistoryPage } from "./pages/History";
 import { Settings as SettingsPage } from "./pages/Settings";
+import { UpdateChecker } from "./components/UpdateChecker";
 
 import "./App.css";
 
@@ -10,6 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
+        <UpdateChecker />
         {/* Sidebar */}
         <aside className="sidebar">
           <div className="sidebar-header">

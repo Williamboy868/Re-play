@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { load } from "@tauri-apps/plugin-store";
-import { FolderOpen, Save } from "lucide-react";
+import { FolderOpen, Save, RefreshCw } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
+import { checkForUpdates } from "../components/UpdateChecker";
 
 export function Settings() {
+  const [checkingUpdates, setCheckingUpdates] = useState(false);
   const [downloadPath, setDownloadPath] = useState("");
   const [defaultFormat, setDefaultFormat] = useState("best");
   const [theme, setTheme] = useState("dark");
@@ -279,6 +281,23 @@ export function Settings() {
           <small style={{ display: "block", marginTop: 8 }}>
             If enabled, FFMPEG will physically rebuild every downloaded video into a standard H.264 MP4. 
             This guarantees 100% compatibility on strict devices (like old iPhones or TVs) but takes significantly more CPU and time.
+          </small>
+        </div>
+
+        <div className="settings-group">
+          <label>App Updates</label>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
+            <button 
+              className="premium-btn secondary" 
+              onClick={() => checkForUpdates(false, setCheckingUpdates)} 
+              disabled={checkingUpdates}
+            >
+              <RefreshCw size={16} className={checkingUpdates ? "spin" : ""} />
+              {checkingUpdates ? "Checking..." : "Check for Updates"}
+            </button>
+          </div>
+          <small style={{ display: "block", marginTop: 8 }}>
+            Re-play automatically checks for updates on startup, but you can manually check here.
           </small>
         </div>
 

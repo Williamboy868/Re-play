@@ -1,7 +1,7 @@
 {
   "name": "re-play",
   "private": true,
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "scripts": {
     "dev": "node src-tauri/scripts/fetch-binaries.js && node src-tauri/scripts/sync-version.js && vite",
@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2.7.2",
     "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-process": "^2",
     "@tauri-apps/plugin-sql": "2",
     "@tauri-apps/plugin-store": "2",
+    "@tauri-apps/plugin-updater": "^2",
     "lucide-react": "^1.32.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
