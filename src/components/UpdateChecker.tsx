@@ -4,8 +4,6 @@ import { ask, message } from "@tauri-apps/plugin-dialog";
 import { relaunch } from "@tauri-apps/plugin-process";
 
 export function UpdateChecker() {
-  const [checking, setChecking] = useState(false);
-
   useEffect(() => {
     // Check if the app just updated by comparing current version to stored version
     checkIfJustUpdated();
