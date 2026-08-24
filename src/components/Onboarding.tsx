@@ -42,19 +42,7 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
     }
   }
 
-  function handleGetEdge() {
-    window.open("https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home", "_blank");
-    localStorage.setItem("onboardingComplete", "true");
-    onComplete();
-  }
-
-  function handleGetFirefox() {
-    window.open("https://addons.mozilla.org/en-US/firefox/", "_blank");
-    localStorage.setItem("onboardingComplete", "true");
-    onComplete();
-  }
-
-  async function handleGetChrome() {
+  async function handleGetExtension() {
     try {
       const path = await invoke<string>("export_extension_zip");
       setZipPath(path);
@@ -161,24 +149,10 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
             <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 32, flexWrap: "wrap", flexDirection: "column" }}>
               <button 
                 className="premium-btn primary" 
-                onClick={handleGetEdge}
-                style={{ padding: "10px 24px", fontSize: "1rem", width: "300px", margin: "0 auto" }}
+                onClick={handleGetExtension}
+                style={{ padding: "10px 24px", fontSize: "1rem", width: "400px", margin: "0 auto", background: "linear-gradient(45deg, #34a853, #4facfe)" }}
               >
-                Install for Microsoft Edge
-              </button>
-              <button 
-                className="premium-btn primary" 
-                onClick={handleGetFirefox}
-                style={{ padding: "10px 24px", fontSize: "1rem", width: "300px", margin: "0 auto", background: "linear-gradient(45deg, #ff7171, #ff9e43)" }}
-              >
-                Install for Mozilla Firefox
-              </button>
-              <button 
-                className="premium-btn primary" 
-                onClick={handleGetChrome}
-                style={{ padding: "10px 24px", fontSize: "1rem", width: "300px", margin: "0 auto", background: "linear-gradient(45deg, #34a853, #4285f4)" }}
-              >
-                Install for Chrome / Brave
+                Install for Chrome, Edge, Brave & More
               </button>
             </div>
             
@@ -203,7 +177,15 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
               </div>
               <p style={{ color: "#e5e7eb", marginTop: 20 }}>Please follow these 3 quick steps to install it:</p>
               <ol style={{ color: "#a0a0a0", lineHeight: 1.6 }}>
-                <li>Open your browser and navigate to <strong>chrome://extensions</strong> (or <strong>brave://extensions</strong>)</li>
+                <li>Open your browser and navigate to the extensions page:
+                  <ul style={{ margin: "4px 0 8px 20px", fontSize: "0.85rem" }}>
+                    <li>Chrome: <strong>chrome://extensions</strong></li>
+                    <li>Edge: <strong>edge://extensions</strong></li>
+                    <li>Brave: <strong>brave://extensions</strong></li>
+                    <li>Vivaldi: <strong>vivaldi://extensions</strong></li>
+                    <li>Opera: <strong>opera://extensions</strong></li>
+                  </ul>
+                </li>
                 <li>Turn on <strong>Developer mode</strong> in the top right corner.</li>
                 <li>Click the <strong>"Load unpacked"</strong> button and select the <strong>Re-play Extension</strong> folder from your Downloads.</li>
               </ol>

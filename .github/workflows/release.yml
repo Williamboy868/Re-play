@@ -71,9 +71,8 @@ jobs:
           tauriScript: bun run tauri
 
       - name: Upload Extension Zip to Release
-        uses: softprops/action-gh-release@v2
         if: matrix.platform == 'ubuntu-22.04' # Only upload it once
-        with:
-          tag_name: ${{ inputs.version || github.ref_name }}
-          files: builds/re-play-extension.zip
-          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ inputs.version || github.ref_name }} builds/re-play-extension.zip --clobber
