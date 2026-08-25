@@ -146,13 +146,26 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
               ))}
             </div>
 
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 32, flexWrap: "wrap", flexDirection: "column" }}>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", marginBottom: 32, flexWrap: "wrap", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <button
+                  className="premium-btn primary"
+                  onClick={() => window.open("https://microsoftedge.microsoft.com/addons/detail/replay-downloader/hcbaomikklgllbijkmoiiigcmepgkama", "_blank")}
+                  style={{ padding: "10px 24px", fontSize: "1rem", width: "400px", background: "linear-gradient(45deg, #0078d7, #00b4f0)" }}
+                >
+                  Install for Microsoft Edge
+                </button>
+                <p style={{ fontSize: "0.85rem", color: "#9ca3af", margin: "8px 0 0 0", maxWidth: "400px", textAlign: "center", lineHeight: 1.4 }}>
+                  Recommended for Edge users to avoid the developer mode banner nuisance.
+                </p>
+              </div>
+
               <button
                 className="premium-btn primary"
                 onClick={handleGetExtension}
-                style={{ padding: "10px 24px", fontSize: "1rem", width: "400px", margin: "0 auto", background: "linear-gradient(45deg, #34a853, #4facfe)" }}
+                style={{ padding: "10px 24px", fontSize: "1rem", width: "400px", background: "linear-gradient(45deg, #34a853, #4facfe)" }}
               >
-                Install for Chrome, Edge, Brave & More
+                Manual Install (Chrome, Brave & Others)
               </button>
             </div>
 
@@ -180,7 +193,6 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
                 <li>Open your browser and navigate to the extensions page:
                   <ul style={{ margin: "4px 0 8px 20px", fontSize: "0.85rem" }}>
                     <li>Chrome: <strong>chrome://extensions</strong></li>
-                    <li>Edge: <strong>edge://extensions</strong></li>
                     <li>Brave: <strong>brave://extensions</strong></li>
                     <li>Vivaldi: <strong>vivaldi://extensions</strong></li>
                     <li>Opera: <strong>opera://extensions</strong></li>

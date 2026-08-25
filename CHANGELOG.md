@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.3] - 2026-08-25
+
+### Added
+- **Edge Add-ons Store**: Added direct links to the Microsoft Edge Add-ons store in the onboarding flow and website to provide a smoother installation experience for Edge users.
+
 ## [1.1.2] - 2026-08-24
 
 ### Added

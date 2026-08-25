@@ -271,23 +271,35 @@ export default function Home() {
               style={{ width: 140, height: 40 }}
             />
           ) : (
-            <a
-              href={extensionAsset?.browser_download_url ?? RELEASES_URL}
-              target={extensionAsset ? undefined : "_blank"}
-              rel={extensionAsset ? undefined : "noopener noreferrer"}
-              className="btn btn-secondary btn-sm"
-              id="download-btn-extension"
-            >
-              <HiDownload />
-              Download .zip
-              {extensionAsset && (
-                <span
-                  style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}
-                >
-                  ({formatBytes(extensionAsset.size)})
-                </span>
-              )}
-            </a>
+            <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+              <a
+                href="https://microsoftedge.microsoft.com/addons/detail/replay-downloader/hcbaomikklgllbijkmoiiigcmepgkama"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-sm"
+                id="download-btn-edge"
+              >
+                <HiDownload />
+                Edge Store
+              </a>
+              <a
+                href={extensionAsset?.browser_download_url ?? RELEASES_URL}
+                target={extensionAsset ? undefined : "_blank"}
+                rel={extensionAsset ? undefined : "noopener noreferrer"}
+                className="btn btn-secondary btn-sm"
+                id="download-btn-extension"
+              >
+                <HiDownload />
+                Download .zip
+                {extensionAsset && (
+                  <span
+                    style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}
+                  >
+                    ({formatBytes(extensionAsset.size)})
+                  </span>
+                )}
+              </a>
+            </div>
           )}
         </div>
 
