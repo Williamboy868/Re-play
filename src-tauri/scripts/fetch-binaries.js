@@ -57,10 +57,12 @@ const downloadFile = (url, dest) => {
 async function main() {
   const tasks = [];
   
+  const force = process.argv.includes('--force') || process.argv.includes('--update');
+
   for (const [target, url] of Object.entries(YT_DLP_URLS)) {
     const ext = target.includes('windows') ? '.exe' : '';
     const dest = path.join(BIN_DIR, `yt-dlp-${target}${ext}`);
-    if (!fs.existsSync(dest)) {
+    if (force || !fs.existsSync(dest)) {
       tasks.push(downloadFile(url, dest));
     } else {
       console.log(`yt-dlp for ${target} already exists.`);
@@ -70,7 +72,7 @@ async function main() {
   for (const [target, url] of Object.entries(QUICKJS_URLS)) {
     const ext = target.includes('windows') ? '.exe' : '';
     const dest = path.join(BIN_DIR, `quickjs-${target}${ext}`);
-    if (!fs.existsSync(dest)) {
+    if (force || !fs.existsSync(dest)) {
       tasks.push(downloadFile(url, dest));
     } else {
       console.log(`quickjs for ${target} already exists.`);

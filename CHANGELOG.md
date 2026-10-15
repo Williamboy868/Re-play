@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.4] - 2026-10-15
+
+### Fixed
+- **Video Quality List Extraction**: Hardened format parsing in the backend to ensure video qualities are always extracted even if `yt-dlp` returns non-JSON warnings or multi-line output on stdout. Added fallback line-by-line JSON parsing and support for resolution-derived heights and floating-point dimensions.
+- **Diagnostics & Error Logging**: Added explicit logging for `yt-dlp` format queries and captured `stderr` output in the backend for easier troubleshooting.
+
+### Changed
+- **Binary Provisioning**: Updated `fetch-binaries.js` with `--force` / `--update` flags and added an `update-binaries` npm script to easily refresh provisioned binaries to the latest upstream releases.
+
 ## [1.1.3] - 2026-08-25
 
 ### Added

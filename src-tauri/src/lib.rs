@@ -797,6 +797,7 @@ async fn get_formats(
         args.push("node:node".to_string());
     }
 
+    println!("[Re-play] Fetching formats for url: {}", payload.url);
     args.push(payload.url);
 
     let (mut rx, _) = sidecar_command
@@ -806,19 +807,59 @@ async fn get_formats(
         .expect("Failed to spawn yt-dlp");
         
     let mut json_str = String::new();
+    let mut stderr_str = String::new();
     while let Some(event) = rx.recv().await {
-        if let CommandEvent::Stdout(line) = event {
-            json_str.push_str(&String::from_utf8_lossy(&line));
+        match event {
+            CommandEvent::Stdout(line) => {
+                json_str.push_str(&String::from_utf8_lossy(&line));
+            }
+            CommandEvent::Stderr(line) => {
+                stderr_str.push_str(&String::from_utf8_lossy(&line));
+            }
+            _ => {}
         }
     }
-    
-    if let Ok(json) = serde_json::from_str::<serde_json::Value>(&json_str) {
+
+    if !stderr_str.is_empty() {
+        println!("[Re-play] get_formats stderr: {}", stderr_str.trim());
+    }
+
+    let parsed_json = serde_json::from_str::<serde_json::Value>(&json_str)
+        .ok()
+        .or_else(|| {
+            json_str.lines().find_map(|line| {
+                let trimmed = line.trim();
+                if trimmed.starts_with('{') && trimmed.ends_with('}') {
+                    serde_json::from_str::<serde_json::Value>(trimmed).ok()
+                } else {
+                    None
+                }
+            })
+        });
+
+    if let Some(json) = parsed_json {
         if let Some(formats) = json.get("formats").and_then(|f| f.as_array()) {
             let mut heights: Vec<u32> = formats.iter().filter_map(|f| {
-                if let Some(vcodec) = f.get("vcodec").and_then(|v| v.as_str()) {
-                    if vcodec != "none" {
-                        if let Some(height) = f.get("height").and_then(|h| h.as_u64()) {
-                            return Some(height as u32);
+                let vcodec = f.get("vcodec").and_then(|v| v.as_str());
+                if vcodec == Some("none") {
+                    return None;
+                }
+                if let Some(height) = f.get("height").and_then(|h| h.as_u64()) {
+                    if height > 0 {
+                        return Some(height as u32);
+                    }
+                }
+                if let Some(height) = f.get("height").and_then(|h| h.as_f64()) {
+                    if height > 0.0 {
+                        return Some(height as u32);
+                    }
+                }
+                if let Some(res) = f.get("resolution").and_then(|r| r.as_str()) {
+                    if let Some((_, h_str)) = res.split_once('x') {
+                        if let Ok(h) = h_str.parse::<u32>() {
+                            if h > 0 {
+                                return Some(h);
+                            }
                         }
                     }
                 }
@@ -828,10 +869,12 @@ async fn get_formats(
             heights.sort_unstable_by(|a, b| b.cmp(a));
             heights.dedup();
             
+            println!("[Re-play] Found qualities: {:?}", heights);
             return Json(FormatsResponse { qualities: heights });
         }
     }
     
+    println!("[Re-play] No video qualities extracted from yt-dlp response.");
     Json(FormatsResponse { qualities: vec![] })
 }
 
